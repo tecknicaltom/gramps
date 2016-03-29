@@ -41,324 +41,277 @@ class BaseTest(unittest.TestCase):
         results = filter_.apply(self.db)
         return set(results)
 
+    def assert_rule_matches_ids(self, rule, ids):
+        matching_handles = self.filter_with_rule(rule)
+        matching_ids = [self.db.get_person_from_handle(handle).get_gramps_id()
+                for handle in matching_handles]
+        self.assertEqual(set(matching_ids), set(ids))
+
+    def assert_rule_matches_count(self, rule, count):
+        matching_handles = self.filter_with_rule(rule)
+        self.assertEqual(len(matching_handles), count)
+
     def test_Disconnected(self):
         rule = Disconnected([])
-        self.assertEqual(self.filter_with_rule(rule), set([
-            b'0PBKQCXHLAEIB46ZIA', b'QEVJQC04YO01UAWJ2N', b'UT0KQCMN7PC9XURRXJ', b'MZAKQCKAQLIQYWP5IW',
-            b'Y7BKQC9CUXWQLGLPQM', b'OBBKQC8NJM5UYBO849', b'NPBKQCKEF0G7T4H312', b'423KQCGLT8UISDUM1Q',
-            b'8S0KQCNORIWDL0X8SB', b'AP5KQC0LBXPM727OWB', b'AREKQC0VPBHNZ5R3IO', b'KU0KQCJ0RUTJTIUKSA',
-            b'VC4KQC7L7KKH9RLHXN', b'0P3KQCRSIVL1A4VJ19', b'PK6KQCGEL4PTE720BL', b'YIKKQCSD2Z85UHJ8LX',
-            b'KY8KQCMIH2HUUGLA3R', b'RD7KQCQ24B1N3OEC5X', b'NV0KQC7SIEH3SVDPP1', b'KIKKQCU2CJ543TLM5J',
-            b'AT0KQC4P3MMUCHI3BK', b'J6BKQC1PMNBAYSLM9U', b'IXXJQCLKOUAJ5RSQY4', b'U4ZJQC5VR0QBIE8DU',
-            b'F7BKQC4NXO9R7XOG2W', b'7U0KQC6PGZBNQATNOT', b'78AKQCI05U36T3E82O', b'H1GKQCWOUJHFSHXABA',
-            b'ZWGKQCRFZAPC5PYJZ1', b'EZ0KQCF3LSM9PRSG0K', b'FHKKQC963NGSY18ZDZ', b'FJ9KQCRJ3RGHNBWW4S',
-            b'S2EKQC9F4UR4R71IC3', b'1XBKQCX019BKJ0M9IH', b'Z62KQC706L0B0WTN3Q', b'O7EKQCEVZ7FBEWMNWE',
-            b'XY8KQCULFPN4SR915Q', b'WQDKQCEULSD5G9XNFI', b'2Z0KQCSWKVFG7RPFD8', b'26BKQC0SJIJOH02H2A',
-            b'262KQCH2RQKN0CBRLF', b'P5ZJQCMKO7EYV4HFCL', b'KXBKQC52JO3AP4GMLF', b'9IFKQC60JTDBV57N6S',
-            b'TQ0KQCZ8LA7X9DIEAN', b'BAXJQCORQA5Q46FCDG', b'VR0KQC7LVANO83AL35', b'75CKQC4T617U2E5T5Y',
-            b'LCTKQCZU3F94CEFSOM', b'WJYJQCPNJJI5JN07SD', b'3N6KQC6BE5EIXTRMDL', b'CM5KQCD57I15GKLAMB',
-            b'cccbffffd3e69819cd8', b'BJKKQCVDA66528PDAU', b'QS0KQCLMIZFI8ZDLM3', b'UW0KQCRHBIYMA8LPZD',
-            b'GJ7KQC7APJSAMHEK5Q', b'711KQCDXOQWB3KDWEP', b'PY0KQC77AJ3457A6C2', b'WZ0KQCYVMEJHDR4MV2',
-            b'28EKQCQGM6NLLWFRG7', b'E33KQCRREJALRA715H', b'8HKKQCTEJAOBVH410L', b'IO6KQC70PMBQUDNB3L',
-            b'1YBKQCWRBNB433NEMH', b'M01KQCF7KUWCDY67JD', b'CR0KQCOMV2QPPC90IF', b'85ZJQCMG38N7Q2WKIK',
-            b'I9GKQCERACL8UZF2PY', b'BY0KQCOZUK47R2JZDE', b'7W0KQCYDMD4LTSY5JL', b'A0YJQC3HONEKD1JCPK',
-            ]))
+        self.assert_rule_matches_ids(rule, [
+            'I0461', 'I0506', 'I0282', 'I0400', 'I1177', 'I1341', 'I0393',
+            'I0210', 'I0382', 'I1143', 'I0634', 'I1130', 'I0937', 'I0389',
+            'I1017', 'I0886', 'I0392', 'I0401', 'I0891', 'I0783', 'I0534',
+            'I0206', 'I1059', 'I0402', 'I0398', 'I0284', 'I0503', 'I1340',
+            'I0076', 'I0884', 'I1342', 'I0697', 'I0175', 'I0922', 'I1026',
+            'I0391', 'I0743', 'I0399', 'I0883', 'I0810', 'I0283', 'I1337',
+            'I0843', 'I0381', 'I0386', 'I0694', 'I2116', 'I0396', 'I1025',
+            'I0924', 'I0384', 'I0885', 'I0782', 'I0630', 'I0397', 'I0923',
+            'I0385', 'I0877', 'I0913', 'I0736', 'I1792', 'I0388', 'I0243',
+            'I1338', 'I1104', 'I0460', 'I0383', 'I0387', 'I0570', 'I0688',
+            'I0998', 'I0912',
+            ])
 
     def test_Everyone(self):
         rule = Everyone([])
-        self.assertEqual(len(self.filter_with_rule(rule)), self.db.get_number_of_people())
+        self.assert_rule_matches_count(rule, self.db.get_number_of_people())
 
     def test_FamilyWithIncompleteEvent(self):
         rule = FamilyWithIncompleteEvent([])
         # too many to list out to test explicitly
-        self.assertEqual(len(self.filter_with_rule(rule)), 775)
+        self.assert_rule_matches_count(rule, 775)
 
     def test_HasAlternateName(self):
         rule = HasAlternateName([])
-        self.assertEqual(self.filter_with_rule(rule), set([
-            b'46WJQCIOLQ0KOX2XCC', b'GNUJQCL9MD64AM56OH',
-            ]))
+        self.assert_rule_matches_ids(rule, [
+            'I0044', 'I0107',
+            ])
 
     def test_HasCommonAncestorWith_empty(self):
         rule = HasCommonAncestorWith([''])
-        self.assertEqual(self.filter_with_rule(rule), set([
-            ]))
+        self.assert_rule_matches_count(rule, 0)
 
     def test_HasCommonAncestorWith_nonmatching(self):
         rule = HasCommonAncestorWith(['I0000'])
-        self.assertEqual(self.filter_with_rule(rule), set([
-            ]))
+        self.assert_rule_matches_count(rule, 0)
 
     def test_HasCommonAncestorWith_irregular(self):
         rule = HasCommonAncestorWith(['ABCDEFG'])
-        self.assertEqual(self.filter_with_rule(rule), set([
-            ]))
+        self.assert_rule_matches_count(rule, 0)
 
     def test_HasCommonAncestorWith_matching(self):
         rule = HasCommonAncestorWith(['I0044'])
-        self.assertEqual(self.filter_with_rule(rule), set([
-            b'GNUJQCL9MD64AM56OH', b'SOFKQCBYAO18OWC0CS', b'EMEKQC02EOUF8H0SHM', b'3EXJQCVWOSQFGLYB6H',
-            b'EMTJQCQU6TL4WAVSE4', b'QUEKQCZL61S8BJJ388', b'MKEKQCSBQGAVHAPCQT', b'MUFKQCMXUJ07MCDUNI',
-            b'DBXJQCJCEZMO17WZ89', b'ORFKQC4KLWEGTGR19L', b'MG5KQC6ZKSVO4A63G2', b'N26KQCF3ASHMZ0HEW6',
-            b'GNWJQC9NLVF2MZLHU9', b'ZFXJQCHAD8SLZZ7KRP', b'44WJQCLCQIPZUB0UH', b'B8TJQC53HJXOGXK8F7',
-            b'D3WJQCCGV58IP8PNHZ', b'3LEKQCRF3FD2E1H73I', b'F06KQCZY1I4H4IFZM', b'VMTJQC49IGKLG2EQ5',
-            b'9BXKQC1PVLPYFMD6IX', b'H1DKQC4YGZ5A61FGS', b'1GWJQCGOOZ8FJW3YK9', b'S16KQCX8XUO3EEL85N',
-            b'OREKQCF34YE89RL8S6', b'RU5KQCQTPC9SJ5Q1JN', b'GYFKQCPH8Q0JDN94GR', b'9QFKQC54ET79K2SD57',
-            b'MLEKQCH64557K610VR', b'AWFKQCJELLUWDY2PD3', b'ZDWJQC7TMS2AWAVF2Y', b'VJFKQCFO7WESWPNKHE',
-            b'LV5KQCJCCR0S3DN5WW', b'CDTJQCVTVX7CNMY9YU', b'OX5KQCKE3I94MEPDC', b'JF5KQC2L6ABI0MVD3E',
-            b'CH5KQCIEXSN1J5UEHB', b'4JEKQC22K5UTH9QHCU', b'EPFKQCETTDTEL3PYIR', b'D16KQCIZS56HVPW6DA',
-            b'2TEKQCTSCRL4Z2AUHE', b'3WEKQCHXRH61E3CIKB', b'TDTJQCGYRS2RCCGQN3', b'SMWJQCXQ6I2GEXSPK9',
-            b'PXFKQCXEHJX3W1Q1IV', b'Q9TJQCXDL1599L2B2Z', b'BFXJQCF1JBOXPRW2OS', b'6TFKQCUTO94WB2NHN',
-            b'FNEKQCO239QSNK0R78', b'3RFKQCNKMX9HVLNSLW', b'W2DKQCV4H3EZUJ35DX', b'5IEKQCN37EFBK9EBUD',
-            b'LW5KQCXSXRC2XV3T3D', b'ZNEKQCULV911DIXBK3', b'35WJQC1B7T7NPV8OLV', b'MPEKQC6TIP3SP1YF7I',
-            b'DMFKQC5MHGYC6503F2', b'3KEKQC45RL87D4ZG86', b'KLTJQC70XVZJSPQ43U', b'LVEKQCP09W7JNFDAFC',
-            b'DPUJQCUYKKDPT78JJV', b'JDXJQCR5L0NTR21SQA', b'UAXJQC6HC354V7Q6JA', b'XBXJQCS4QY316ZGHRN',
-            b'HCXJQCRKB4K65V1C07', b'66TJQC6CC7ZWL9YZ64', b'XNFKQC6DN59LACS9IU', b'LL5KQCG687Y165GL5P',
-            b'7X5KQC9ABK4T6AW7QF', b'HKTJQCIJD8RK9RJFO1', b'1LTJQCYQI1DXBLG6Z', b'0FWJQCLYEP736P3YZK',
-            b'0DXJQC1T8P3CQKZIUO', b'ISEKQC97YI74A9VKWC', b'KGXJQCBQ39ON9VB37T', b'BZ5KQCD4KFI3BTIMZU',
-            b'0HEKQCLINMQS4RB7B8', b'BBTJQCNT6N1H4X6TL4', b'COFKQCUXC2H4G3QBYT', b'DI5KQC3CLKWQI3I0CC',
-            b'T8TJQCWWI8RY57YNTQ', b'46WJQCIOLQ0KOX2XCC', b'OEXJQCQJHF2BLSAAIS', b'GNFKQCH8AFJRJO9V4Y',
-            b'8LFKQCQWXTJQJR4CXV', b'IGWJQCSVT8NXTFXOFJ', b'3PEKQC8ZDCYTSSIKZ9', b'5UEKQC8N8NEPSWU1QQ',
-            b'NK5KQC1MAOU2BP35ZV', b'UZFKQCIHVT44DC9KGH', b'JJ5KQC83DT7VDMUYRQ', b'626KQC7C08H3UTM38E',
-            b'XIFKQCLQOY645QTGP7', b'HEWJQCWQQ3K4BNRLIO', b'HDWJQCT361VOV2PQLP', b'XFKKQCGA4DVECEB48E',
-            b'KWEKQCTNIIV9BROFFG',
-            ]))
+        self.assert_rule_matches_ids(rule, [
+            'I1105', 'I0648', 'I0003', 'I1126', 'I0001', 'I0120', 'I1335',
+            'I1053', 'I1123', 'I0004', 'I0642', 'I0121', 'I0658', 'I0657',
+            'I0624', 'I0136', 'I1050', 'I1062', 'I1039', 'I0182', 'I1065',
+            'I0625', 'I1117', 'I0010', 'I0006', 'I0046', 'I1043', 'I0178',
+            'I0016', 'I0176', 'I0627', 'I0186', 'I1106', 'I0017', 'I1048',
+            'I0015', 'I1068', 'I0044', 'I1112', 'I1047', 'I0183', 'I0106',
+            'I1064', 'I0647', 'I0972', 'I0105', 'I1121', 'I2044', 'I1045',
+            'I0626', 'I1069', 'I0107', 'I1115', 'I0002', 'I1061', 'I0623',
+            'I1113', 'I0009', 'I0644', 'I0019', 'I1125', 'I1119', 'I0179',
+            'I0125', 'I1046', 'I0119', 'I0177', 'I0651', 'I0653', 'I1128',
+            'I1108', 'I0185', 'I1052', 'I0629', 'I0018', 'I0655', 'I0184',
+            'I1060', 'I1055', 'I1067', 'I0180', 'I1114', 'I0973', 'I0646',
+            'I1110', 'I0181', 'I0628', 'I1111', 'I1041', 'I1116', 'I0124',
+            'I1056', 'I0135', 'I0656', 'I0122', 'I1109', 'I0104',
+            ])
 
     def test_HasNickname(self):
         rule = HasNickname([])
-        self.assertEqual(self.filter_with_rule(rule), set([
-            b'cc8205d883763f02abd', b'GNUJQCL9MD64AM56OH', b'Q8HKQC3VMRM1M6M7ES', 
-            ]))
+        self.assert_rule_matches_ids(rule, [
+            'I0044', 'I1200', 'I2108',
+            ])
 
     def test_HasUnknownGender(self):
         rule = HasUnknownGender([])
-        self.assertEqual(self.filter_with_rule(rule), set([
-            b'OJOKQC83Y1EDBIMLJ6', b'8BHKQCFK9UZFRJYC2Y', b'PGFKQC1TUQMXFAMLMB', b'IHOKQCECRZYQDKW6KF',
-            b'8HKKQCTEJAOBVH410L', b'AGFKQCO358R18LNJYV', b'1ENKQCBPFZTAQJSP4O', b'NUWKQCO7TVAOH0CHLV',
-            b'P5IKQC88STY3FNTFZ3', b'7GXKQCMVFU8WR1LKZL', b'LGXKQCJ5OP6MKF9QLN', b'XNFKQC6DN59LACS9IU',
-            b'7IOKQC1NVGUI1E55CQ', b'57PKQCFAWY7AM3JS4M', b'BNXKQCEBXC1RCOGJNF', b'TFFKQC1RMG8RRADKDH',
-            b'FHKKQC963NGSY18ZDZ', b'WMXKQCDUJ4JKQQYCR7', b'PBHKQCHOAGTECRKT9L', b'OFXKQC8W0N3N6JP6YQ',
-            ]))
+        self.assert_rule_matches_ids(rule, [
+            'I1338', 'I2067', 'I1586', 'I2055', 'I1099', 'I1509', 'I1206',
+            'I1639', 'I1205', 'I1111', 'I2054', 'I1590', 'I1101', 'I2013',
+            'I2068', 'I1587', 'I1337', 'I1100', 'I1271', 'I2053',
+            ])
 
     def test_HasSourceOf_empty(self):
         # this rule run with an empty string finds people with no source citations
         rule = HasSourceOf([''])
-        self.assertEqual(self.filter_with_rule(rule), set([
-            b'cc82060512042f67e2c', b'cc8205d87831c772e87', b'cc82060516c6c141500', b'cc8205d87fd529000ff',
-            b'cc82060504445ab6deb', b'cc8205d887376aacba2', b'cccbffffd3e69819cd8', b'cc8205d87c20350420b',
-            b'cc8206050e541f79f92', b'cc8205d883763f02abd', b'cc8206050980ea622d0', b'cc8205d872f532ab14e',
-            ]))
+        self.assert_rule_matches_ids(rule, [
+            'I2110', 'I2106', 'I2114', 'I2109', 'I2113', 'I2115', 'I2111',
+            'I2105', 'I2116', 'I2112', 'I2107', 'I2108',
+            ])
 
     def test_HasSourceOf_nonmatching(self):
         rule = HasSourceOf(['S0004'])
-        self.assertEqual(self.filter_with_rule(rule), set([
-            ]))
+        self.assert_rule_matches_count(rule, 0)
 
     def test_HasSourceOf_irregular(self):
         rule = HasSourceOf(['ABCDEFG'])
-        self.assertEqual(self.filter_with_rule(rule), set([
-            ]))
+        self.assert_rule_matches_count(rule, 0)
 
     def test_HasSourceOf_matching(self):
         rule = HasSourceOf(['S0000'])
-        self.assertEqual(self.filter_with_rule(rule), set([
-            b'GNUJQCL9MD64AM56OH',
-            ]))
-
+        self.assert_rule_matches_ids(rule, [
+            'I0044',
+            ])
 
     def test_HaveAltFamilies(self):
         rule = HaveAltFamilies([])
-        self.assertEqual(self.filter_with_rule(rule), set([
-            b'CH5KQCIEXSN1J5UEHB', b'MG5KQC6ZKSVO4A63G2',
-            ]))
+        self.assert_rule_matches_ids(rule, [
+            'I0625', 'I0624',
+            ])
 
     def test_HaveChildren(self):
         rule = HaveChildren([])
         # too many to list out to test explicitly
-        self.assertEqual(len(self.filter_with_rule(rule)), 895)
+        self.assert_rule_matches_count(rule, 895)
 
     def test_IncompleteNames(self):
         rule = IncompleteNames([])
-        self.assertEqual(self.filter_with_rule(rule), set([
-            b'IHOKQCECRZYQDKW6KF', b'cc82060504445ab6deb', b'LCXKQCQZH5EH56NTCD', b'cc8205d87831c772e87',
-            b'3RFKQCNKMX9HVLNSLW', b'cc8205d87fd529000ff', b'B1UKQCBR49WB3134PN', b'0TTKQCXXY59OCDPLV3',
-            b'F3UKQC7ZV3EYVWTZ8O', b'1MXKQCJ2BR43910ZYX', b'cc8206050e541f79f92', b'FHKKQC963NGSY18ZDZ',
-            b'R5HKQCIEPOY1DMQOWX', b'ZHMKQC50PFVAPI8PZ6', b'T4UKQCYGECXGVNBWMY', b'cc82060516c6c141500',
-            b'UPWKQCYVFH7RZOSZ29', b'2AMKQCE67YOH3TBVYI', b'2CUKQCFDVN3EZE2E4C', b'7IOKQC1NVGUI1E55CQ',
-            b'KSTKQC018GNA7HDCAS', b'WIVKQC4Q4FCQJT5M63', b'A4YKQCRYSI5FT5T38', b'BUNKQCO4HZHZP70F3K',
-            b'YRTKQCNDP343OD5OQJ', b'7VEKQCV05EDK0625KI', b'cc8205d872f532ab14e', b'TPXKQCEGL04KHGMO2X',
-            b'L9LKQCQ8KJRKHM4D2E', b'8QXKQCHJ2EUC7OV8EQ', b'W0XKQCKSFWWJWQ2OSN', b'I6QKQCFRDTV2LDC8M2',
-            b'XTUKQC7WCIVA5F0NC4', b'F4UKQCPK572VWU2YZQ', b'JKDKQCF4ND92A088J2', b'COFKQCUXC2H4G3QBYT',
-            b'BNXKQCEBXC1RCOGJNF', b'Q42KQCKJZGS4IZWHF5', b'P5IKQC88STY3FNTFZ3', b'7CXKQC59NSZFXIG1UE',
-            b'cc8205d87c20350420b', b'FQUKQCWEHOAWUP4QWS', b'3YTKQCK2W63W0MQBJE', b'8HKKQCTEJAOBVH410L',
-            b'HLQKQC0BJIZL0V4EK4', b'B0UKQC9A54F1GUB7NR', b'EPXKQCQRZP2PNPN7BE', b'cc82060512042f67e2c',
-            b'XZLKQCRQA9EHPBNZPT', b'OQXKQC2Y5FVH9PK0JL', b'AXLKQC0YTFAWQ234YD', b'OFXKQC8W0N3N6JP6YQ',
-            b'MWUKQCD2ZSCECQOCLG', b'1ENKQCBPFZTAQJSP4O', b'N7XKQCYD3VSCSZREGJ', b'2LQKQC62GJUQCJIOK8',
-            b'QXXKQC9PT5FWNT140K', b'VAXKQC19HIFPX61J28', b'0PXKQCJ9S1M3NNASET', b'K8XKQCDSVLSK422A3K',
-            b'52UKQCFYXMFTKIGNBS', b'7GXKQCMVFU8WR1LKZL', b'4UMKQCF07KL2K92CI5', b'LGXKQCJ5OP6MKF9QLN',
-            b'FZTKQCSTPIQ3C9JC46', b'WMXKQCDUJ4JKQQYCR7', b'R6UKQC939L9FV62UGE', b'OIUKQCBHUWDGL7DNTI',
-            b'FRTKQC3G6JBJAR2ZPX', b'PIEKQCKUL6OAMS8Q9R', b'cc8205d887376aacba2', b'LGMKQCQP5M5L18FVTN',
-            b'8HUKQCRV8B3J2LLQ3B', b'LOUKQC45HUN532HOOM', b'cc8205d883763f02abd', b'TBXKQC7OHIN28PVCS3',
-            ]))
+        self.assert_rule_matches_ids(rule, [
+            'I1066', 'I2039', 'I1871', 'I1338', 'I2075', 'I1450', 'I2037',
+            'I2067', 'I1541', 'I2045', 'I2110', 'I2072', 'I1832', 'I1474',
+            'I1834', 'I1042', 'I1383', 'I1814', 'I1816', 'I0992', 'I1586',
+            'I2115', 'I0458', 'I1813', 'I1738', 'I2047', 'I2073', 'I2065',
+            'I1836', 'I1709', 'I2113', 'I1867', 'I1587', 'I1337', 'I2114',
+            'I2109', 'I1437', 'I1828', 'I1844', 'I1195', 'I2107', 'I1878',
+            'I2003', 'I1112', 'I2111', 'I2106', 'I2074', 'I2105', 'I1737',
+            'I1271', 'I2090', 'I1883', 'I1116', 'I1837', 'I1417', 'I2046',
+            'I1838', 'I1815', 'I2103', 'I1509', 'I2043', 'I2108', 'I1925',
+            'I2055', 'I1447', 'I2053', 'I1826', 'I2068', 'I1830', 'I1824',
+            'I1422', 'I2023', 'I1853', 'I2054', 'I1856', 'I2076',
+            ])
 
     def test_IsBookmarked(self):
         rule = IsBookmarked([])
-        self.assertEqual(self.filter_with_rule(rule), set([
-            b'35WJQC1B7T7NPV8OLV', b'AWFKQCJELLUWDY2PD3', b'Q8HKQC3VMRM1M6M7ES',
-            ]))
+        self.assert_rule_matches_ids(rule, [
+            'I0106', 'I1123', 'I1200',
+            ])
 
     def test_IsDuplicatedAncestorOf_empty(self):
         rule = IsDuplicatedAncestorOf([''])
-        self.assertEqual(self.filter_with_rule(rule), set([
-            ]))
+        self.assert_rule_matches_count(rule, 0)
 
     def test_IsDuplicatedAncestorOf_nonmatching(self):
         rule = IsDuplicatedAncestorOf(['I0000'])
-        self.assertEqual(self.filter_with_rule(rule), set([
-            ]))
+        self.assert_rule_matches_count(rule, 0)
 
     def test_IsDuplicatedAncestorOf_irregular(self):
         rule = IsDuplicatedAncestorOf(['ABCDEFG'])
-        self.assertEqual(self.filter_with_rule(rule), set([
-            ]))
+        self.assert_rule_matches_count(rule, 0)
 
     def test_IsDuplicatedAncestorOf_matching(self):
         rule = IsDuplicatedAncestorOf(['I1631'])
-        self.assertEqual(self.filter_with_rule(rule), set([
-            b'I3VJQCUY5I6UR92507', b'D4VJQC09STQCWD393E',
-            ]))
+        self.assert_rule_matches_ids(rule, [
+            'I0063', 'I0062',
+            ])
 
     def test_IsRelatedWith_empty(self):
         rule = IsRelatedWith([''])
-        self.assertEqual(self.filter_with_rule(rule), set([
-            ]))
+        self.assert_rule_matches_count(rule, 0)
 
     def test_IsRelatedWith_nonmatching(self):
         rule = IsRelatedWith(['I0000'])
-        self.assertEqual(self.filter_with_rule(rule), set([
-            ]))
+        self.assert_rule_matches_count(rule, 0)
 
     def test_IsRelatedWith_irregular(self):
         rule = IsRelatedWith(['ABCDEFG'])
-        self.assertEqual(self.filter_with_rule(rule), set([
-            ]))
+        self.assert_rule_matches_count(rule, 0)
 
     def test_IsRelatedWith_matching(self):
         rule = IsRelatedWith(['I1844'])
-        self.assertEqual(self.filter_with_rule(rule), set([
-            b'HWTKQCSM28EI6WFDHP', b'T4UKQCYGECXGVNBWMY', b'YOTKQCEX2PLG03LZQS', b'X8UKQCIDY21QIQBDVI',
-            b'F3UKQC7ZV3EYVWTZ8O', b'0TTKQCXXY59OCDPLV3', b'EVTKQCHV2E2PODFD7C', b'BBUKQC5GPRPDJHJAWU',
-            b'FRTKQC3G6JBJAR2ZPX', b'NDTKQCN95VFLGJ21L', b'SFTKQC26EJ2BYQCRIA', b'MYTKQCVCFOFM32H9GB',
-            b'B0UKQC9A54F1GUB7NR', b'PTTKQCYN0JR3ZZJNWR', b'F4UKQCPK572VWU2YZQ', b'LLTKQCX39KCXFSX0U4',
-            b'IXTKQC1BAU1F1WNXKB', b'3YTKQCK2W63W0MQBJE', b'TQTKQCO897BNA1H93B', b'DOTKQCP1MG3VC8D7V2',
-            b'3NTKQCZKLMIM6HYFE1', b'WUTKQCVQCUPFFOGUT8', b'GETKQCPRC2W5YDUYM6', b'YRTKQCNDP343OD5OQJ',
-            b'U0UKQCBZS0R6WW7LBS', b'J2UKQC897I42M9VHDD', b'7MTKQC1QNE4H5RF35S', b'5FTKQCKT9SDZ8TB03C',
-            b'O1UKQCJD5YHDRW887V', b'EUTKQCFATXRU431YY6', b'UHTKQCORH3NTZ0FYL3', b'2CUKQCFDVN3EZE2E4C',
-            b'RNTKQCMLGRRKQVKDPR', b'CGTKQC4WO8W3WSQRCX', b'WAUKQCOQ91QCJZWQ9U', b'FZTKQCSTPIQ3C9JC46',
-            b'AHTKQCM2YFRW3AGSRL', b'WBTKQCC775IAAGIWZD', b'8KTKQC407A8CN5O68H', b'8QTKQCN8ZKY5OWWJZF',
-            b'UKTKQCSL3AUJIWTD2A', b'HAUKQCM3GYGVTREGZS', b'52UKQCFYXMFTKIGNBS', b'U3UKQCO30PWAK6JQBA',
-            b'R6UKQC939L9FV62UGE', b'TZTKQCR39A060AQ63C', b'X9UKQCFELSDAQ2TDP1', b'B1UKQCBR49WB3134PN',
-            b'KSTKQC018GNA7HDCAS', b'FJTKQCJCMAHJOA9NHI', b'HITKQCWJSCZX2AN6NP', b'WVTKQCZC91I63LHEE7',
-            b'0DTKQC6KBOS69LQJ35',
-            ]))
+        self.assert_rule_matches_ids(rule, [
+            'I1800', 'I1809', 'I1795', 'I1843', 'I1810', 'I1797', 'I1829',
+            'I1815', 'I1819', 'I1822', 'I1825', 'I1835', 'I1824', 'I1811',
+            'I1844', 'I1813', 'I1821', 'I1842', 'I1820', 'I1798', 'I1831',
+            'I1796', 'I1830', 'I1836', 'I1826', 'I1823', 'I1839', 'I1793',
+            'I1802', 'I1840', 'I1808', 'I1837', 'I1804', 'I1814', 'I1801',
+            'I1838', 'I1834', 'I1832', 'I1841', 'I1794', 'I1799', 'I1806',
+            'I1803', 'I1816', 'I1817', 'I1828', 'I1827', 'I1791', 'I1807',
+            'I1805', 'I1833', 'I1818', 'I1812',
+            ])
 
     def test_HasIdOf_empty(self):
         rule = HasIdOf([''])
-        self.assertEqual(self.filter_with_rule(rule), set([
-            ]))
+        self.assert_rule_matches_count(rule, 0)
 
     def test_HasIdOf_nonmatching(self):
         rule = HasIdOf(['I0000'])
-        self.assertEqual(self.filter_with_rule(rule), set([
-            ]))
+        self.assert_rule_matches_count(rule, 0)
 
     def test_HasIdOf_irregular(self):
         rule = HasIdOf(['ABCDEFG'])
-        self.assertEqual(self.filter_with_rule(rule), set([
-            ]))
+        self.assert_rule_matches_count(rule, 0)
 
     def test_HasIdOf_matching(self):
         rule = HasIdOf(['I0044'])
-        self.assertEqual(self.filter_with_rule(rule), set([
-            b'GNUJQCL9MD64AM56OH',
-            ]))
+        self.assert_rule_matches_ids(rule, [
+            'I0044',
+            ])
 
     def test_IsDefaultPerson(self):
         rule = IsDefaultPerson([])
-        self.assertEqual(self.filter_with_rule(rule), set([
-            b'GNUJQCL9MD64AM56OH',
-            ]))
+        self.assert_rule_matches_ids(rule, [
+            'I0044',
+            ])
 
     def test_IsFemale(self):
         rule = IsFemale([])
         # too many to list out to test explicitly
-        self.assertEqual(len(self.filter_with_rule(rule)), 928)
+        self.assert_rule_matches_count(rule, 928)
 
     def test_IsMale(self):
         rule = IsMale([])
         # too many to list out to test explicitly
-        self.assertEqual(len(self.filter_with_rule(rule)), 1154)
+        self.assert_rule_matches_count(rule, 1154)
 
     def test_MissingParent(self):
         rule = MissingParent([])
         # too many to list out to test explicitly
-        self.assertEqual(len(self.filter_with_rule(rule)), 849)
+        self.assert_rule_matches_count(rule, 849)
 
     def test_MultipleMarriages(self):
         rule = MultipleMarriages([])
-        self.assertEqual(self.filter_with_rule(rule), set([
-            b'R1VKQCJWNP24VN7BO', b'ZTVJQCTSMI85EGMXFM', b'ENTJQCZXQV1IRKJXUL', b'44WJQCLCQIPZUB0UH',
-            b'SMWJQCXQ6I2GEXSPK9', b'DN3KQC1URTED410L3R', b'5FYJQC86G8EZ0L4E4B', b'5F4KQCJRU8ZKL6SILT',
-            b'0YNKQC5U4EQGVNUZD8', b'YRYJQCE3RF4U8A59UB', b'APWKQCI6YXAXBLC33I', b'XSKKQC6GGKLAYANWAF',
-            b'0FQKQCOQD0VRVJPTSD', b'B3UJQCZHDXII99AWW4', b'cc8205d872f532ab14e', b'SS1KQCWWF9488Q330U',
-            b'OCYJQCS8YT7JO8KIMO', b'I6HKQCQF72V2N56JQ5', b'6YWJQC86FBVN0J6JS', b'KYNKQCVA6FE65ONFIQ',
-            b'SHAKQCNY5IXO30GUAB', b'O5XKQC3V6BPJI13J24', b'ZN7KQC3RLB82EXF1QF', b'CIYJQCF3UK12DL0S2Y',
-            b'H3XJQCFJ4FP4U2WGZC', b'cc82060504445ab6deb', b'4E4KQC1K4XUEX29IJO', b'0XVJQCJUNJY40WDSMA',
-            b'1WUJQCHNH76G6YD3A', b'IH3KQCM1VZPRKLBLK7', b'242KQCBALBOD8ZK5VI', b'8G4KQCS6C1AOM6ZGR3',
-            b'I1EKQCGGDSUD8ILUW4', b'X8BKQCSFF4AET5MY23', b'RJWJQCN1XKXRN5KMCP', b'ZWNKQC9DAZ3C6UHUAV',
-            b'9QUJQCCSWRZNSAPCR', b'HI0KQCG9TGT5AAIPU', b'DI4KQC3S1AO27VWOLN', b'QBDKQCH2IU6N8IXMFE',
-            b'DK2KQCJYW14VXUJ85', b'117KQCBB32RMTTV4G6', b'0QLKQCFTQMNVGCV4GM', b'D2OKQCGDNPT3BH4WH',
-            b'CAYJQCKOL49OF7XWB3', b'ZQGKQCGHS67Q4IMHEG', b'OEXJQCQJHF2BLSAAIS', b'UKYJQC70LIZQ11BP89',
-            b'FF2KQCRBSPCG1QY97', b'L6EKQCO8QYL2UO2MQO',
-            ]))
+        self.assert_rule_matches_ids(rule, [
+            'I1548', 'I0236', 'I0053', 'I0525', 'I0577', 'I0575', 'I1894',
+            'I0232', 'I0135', 'I0027', 'I0855', 'I1015', 'I2034', 'I0573',
+            'I1197', 'I0154', 'I0888', 'I1406', 'I0476', 'I0105', 'I0228',
+            'I0471', 'I0457', 'I0241', 'I0574', 'I0715', 'I1167', 'I1547',
+            'I0438', 'I0984', 'I1725', 'I1023', 'I2111', 'I0532', 'I1545',
+            'I2110', 'I1557', 'I0163', 'I2002', 'I0245', 'I0368', 'I0047',
+            'I0020', 'I0097', 'I0257', 'I0094', 'I0130', 'I0750', 'I0183',
+            'I1355',
+            ])
 
     def test_NeverMarried(self):
         rule = NeverMarried([])
         # too many to list out to test explicitly
-        self.assertEqual(len(self.filter_with_rule(rule)), 749)
+        self.assert_rule_matches_count(rule, 749)
 
     def test_NoBirthdate(self):
         rule = NoBirthdate([])
         # too many to list out to test explicitly
-        self.assertEqual(len(self.filter_with_rule(rule)), 966)
+        self.assert_rule_matches_count(rule, 966)
 
     def test_NoDeathdate(self):
         rule = NoDeathdate([])
         # too many to list out to test explicitly
-        self.assertEqual(len(self.filter_with_rule(rule)), 1581)
+        self.assert_rule_matches_count(rule, 1581)
 
     def test_PeoplePrivate(self):
         # TODO: example.gramps has no people marked private
         rule = PeoplePrivate([])
-        self.assertEqual(self.filter_with_rule(rule), set([
-            ]))
+        self.assert_rule_matches_count(rule, 0)
 
     def test_PeoplePublic(self):
         rule = PeoplePublic([])
         # too many to list out to test explicitly
-        self.assertEqual(len(self.filter_with_rule(rule)), 2102)
+        self.assert_rule_matches_count(rule, 2102)
 
     def test_PersonWithIncompleteEvent(self):
         rule = PersonWithIncompleteEvent([])
         # too many to list out to test explicitly
-        self.assertEqual(len(self.filter_with_rule(rule)), 740)
+        self.assert_rule_matches_count(rule, 740)
 
     def test_RelationshipPathBetweenBookmarks(self):
         rule = RelationshipPathBetweenBookmarks([])
-        self.assertEqual(self.filter_with_rule(rule), set([
-            b'44WJQCLCQIPZUB0UH', b'35WJQC1B7T7NPV8OLV', b'AWFKQCJELLUWDY2PD3', b'D3WJQCCGV58IP8PNHZ',
-            b'Q8HKQC3VMRM1M6M7ES',
-            ]))
+        self.assert_rule_matches_ids(rule, [
+            'I0105', 'I0106', 'I0104', 'I1123', 'I1200',
+            ])
 
 
 if __name__ == "__main__":
